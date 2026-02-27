@@ -77,7 +77,7 @@ JSON Response
 ### 1️⃣ Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/penguin-ml-api.git
+git clone https://github.com/rodlarca/penguin-ml-api.git
 cd penguin-ml-api
 ```
 
@@ -116,11 +116,32 @@ http://localhost:8080/docs
 
 ---
 
+## 🧪 Quick Test with curl
+
+### Health check
+
+```bash
+curl http://localhost:8080/health
+```
+
+### Prediction
+
+```bash
+curl -X POST "http://localhost:8080/predict" \
+-H "Content-Type: application/json" \
+-d '{
+  "bill_length_mm": 39.1,
+  "bill_depth_mm": 18.7,
+  "flipper_length_mm": 181,
+  "body_mass_g": 3750
+}'
+```
+
+---
+
 ## 🔍 API Endpoints
 
 ### Health Check
-
-Request:
 
 ```
 GET /health
@@ -130,7 +151,8 @@ Response:
 
 ```json
 {
-  "status": "ok"
+  "status": "ok",
+  "model_loaded": true
 }
 ```
 
@@ -138,21 +160,8 @@ Response:
 
 ### Prediction
 
-Request:
-
 ```
 POST /predict
-```
-
-Example body:
-
-```json
-{
-  "bill_length_mm": 39.1,
-  "bill_depth_mm": 18.7,
-  "flipper_length_mm": 181,
-  "body_mass_g": 3750
-}
 ```
 
 Example response:
@@ -196,6 +205,19 @@ Pydantic ensures:
 ### Clean Feature Alignment
 
 The API uses the same feature names expected by the trained model to avoid unnecessary transformation logic.
+
+---
+
+## 📥 Model Source
+
+The model file (`penguin_classifier.pkl`) was downloaded from:
+
+https://huggingface.co/SIH/penguin-classifier-sklearn
+
+### ⚠ Security Note
+
+This project loads a serialized `.pkl` model using joblib.  
+Only load pickle files from trusted sources, as pickle deserialization can execute arbitrary code.
 
 ---
 
