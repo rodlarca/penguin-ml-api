@@ -99,7 +99,7 @@ pip install -r requirements.txt
 ## ▶️ Running the API
 
 ```bash
-python app.py
+python penguin_classifier.py
 ```
 
 The server will start at:
